@@ -9,6 +9,7 @@ class InventoryTest {
 
     Item[] itemsTab = new Item[1];
 
+
     @Test
     void updateQuality() {
         //int expectedValue = 5;
@@ -28,7 +29,7 @@ class InventoryTest {
         //ACTION
         inventTest.updateQuality();
 
-        //TEST DU RESULTAT (eviter la logique style boucle)
+        //TEST DU RESULT (eviter la logique style boucle)
         assertEquals(18, inventTest.getItems()[0].getQuality());
     }
 
@@ -36,30 +37,73 @@ class InventoryTest {
     void datePassedQualityDecreaseTwice() {
 
         //SETUP
-        Item elixir = new Item("Elixir of the Mongoose", 5, 7);
+        Item elixir = new Item("Elixir of the Mongoose", 0, 7);
         itemsTab[0] = elixir;
         Inventory inventTest = new Inventory(itemsTab);
 
         //ACTION
-        elixir.setSellIn(0);
         inventTest.updateQuality();
 
-        //TEST RESULTAT
+
+        //TEST RESULT
         assertEquals(5, inventTest.getItems()[0].getQuality());
     }
 
-    //@Test
-    //void noNegativeQuality(){
+    @Test
+    void noNegativeQuality(){
         //SETUP
-      //  Item elixir = new Item("Elixir of the Mongoose", 5, 7);
-        //itemsTab[0] = elixir;
-        //Inventory inventTest = new Inventory(itemsTab);
+        Item elixir = new Item("Elixir of the Mongoose", 5, 0);
+        itemsTab[0] = elixir;
+        Inventory inventTest = new Inventory(itemsTab);
 
         //ACTION
-        //elixir.setSellIn();
-        //inventTest.updateQuality();
+        inventTest.updateQuality();
 
-        //TEST RESULTAT
-        //assertEquals();
- //   }
+        //TEST RESULT
+        assertEquals(0, inventTest.getItems()[0].getQuality());
+   }
+
+   @Test
+    void brieQtyIncreaseWhenGetsOld(){
+       //SETUP
+        Item agedBrie = new Item("Aged Brie", 2, 1);
+       itemsTab[0] = agedBrie;
+       Inventory inventTest = new Inventory(itemsTab);
+
+       //ACTION
+       inventTest.updateQuality();
+
+
+       //TEST RESULT
+       assertEquals(2,inventTest.getItems()[0].getQuality());
+   }
+
+   @Test
+    void qtyNeverMoreThan50(){
+        //SETUP
+       Item agedBrie = new Item("Aged Brie", 2, 50);
+       itemsTab[0] = agedBrie;
+       Inventory inventTest = new Inventory(itemsTab);
+
+       //ACTION
+       inventTest.updateQuality();
+
+       //TEST RESULT
+       assertEquals(50,inventTest.getItems()[0].getQuality());
+   }
+
+   @Test
+    void sulfuraNeverGetSoldQtyNeverDecreases(){
+       //SETUP
+        Item sulfuras = new Item("Sulfuras, Hand of Ragnaros", 0, 80);
+       itemsTab[0] = sulfuras;
+       Inventory inventTest = new Inventory(itemsTab);
+
+       //ACTION
+       inventTest.updateQuality();
+
+       //TEST RESULT
+       assertEquals(80,inventTest.getItems()[0].getQuality());
+
+   }
 }

@@ -35,14 +35,14 @@ public class Inventory {
         for (int i = 0; i < items.length; i++) {
             if (items[i].getName() != "Aged Brie"
                     && items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
-                if (items[i].getQuality() > 0) {
+                if (items[i].getQuality() > 0) { //if vest, elixir, conjured quality decrease until 0 (can't be negative)
                     if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
                         items[i].setQuality(items[i].getQuality() - 1);
                     }
                 }
             } else {
                 if (items[i].getQuality() < 50) {
-                    items[i].setQuality(items[i].getQuality() + 1);
+                    items[i].setQuality(items[i].getQuality() + 1); //Quality increase when it gets old (brie & back)
 
                     if (items[i].getName() == "Backstage passes to a TAFKAL80ETC concert") {
                         if (items[i].getSellIn() < 11) {
@@ -68,7 +68,7 @@ public class Inventory {
                 if (items[i].getName() != "Aged Brie") {
                     if (items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
                         if (items[i].getQuality() > 0) {
-                            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
+                            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") { //vest elixir conjured no limit date
                                 items[i].setQuality(items[i].getQuality() - 1);
                             }
                         }
