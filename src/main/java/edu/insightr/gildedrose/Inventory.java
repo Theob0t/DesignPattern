@@ -34,50 +34,50 @@ public class Inventory {
     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
             if (items[i].getName() != "Aged Brie"
-                    && items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
-                if (items[i].getQuality() > 0) { //if vest, elixir, conjured quality decrease until 0 (can't be negative)
-                    if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
-                        items[i].setQuality(items[i].getQuality() - 1);
+                    && items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") { //Vest, Elixir, Suluras, Conjured
+                if (items[i].getQuality() > 0) { //(can't be negative)
+                    if (items[i].getName() != "Sulfuras, Hand of Ragnaros") { //Sulfuras
+                        items[i].setQuality(items[i].getQuality() - 1);//Quality shouldn't change (sulfuras.quality = 80)
                     }
+                    if(items[i].getName() == "Conjured Mana Cake"){
+                        items[i].setQuality(items[i].getQuality() - 1);}
                 }
-            } else {
-                if (items[i].getQuality() < 50) {
+            } else { //Aged Brie & Backstage (ELSE of if not Aged Brie and Backstage
+                if (items[i].getQuality() < 50) { //has to be <50 anyway
                     items[i].setQuality(items[i].getQuality() + 1); //Quality increase when it gets old (brie & back)
 
                     if (items[i].getName() == "Backstage passes to a TAFKAL80ETC concert") {
-                        if (items[i].getSellIn() < 11) {
-                            if (items[i].getQuality() < 50) {
+                        if (items[i].getSellIn() < 11) {//backstage Quality increases by 2 when there are 10 days or less
                                 items[i].setQuality(items[i].getQuality() + 1);
                             }
-                        }
-
-                        if (items[i].getSellIn() < 6) {
-                            if (items[i].getQuality() < 50) {
+                        if (items[i].getSellIn() < 6) {//backstage Quality increases by 3 when there are 5 days or less
                                 items[i].setQuality(items[i].getQuality() + 1);
-                            }
                         }
                     }
                 }
             }
 
-            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {
-                items[i].setSellIn(items[i].getSellIn() - 1);
+            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {//vest, brie, elixir, backstage, conjured
+                items[i].setSellIn(items[i].getSellIn() - 1); //end of each day system lowers Sellin vallue
             }
 
             if (items[i].getSellIn() < 0) {
-                if (items[i].getName() != "Aged Brie") {
-                    if (items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {
-                        if (items[i].getQuality() > 0) {
-                            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") { //vest elixir conjured no limit date
+                if (items[i].getName() != "Aged Brie") {//vest, elixir, sulfuras, backstage, conjured
+                    if (items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {//vest, elixir, sulfuras, conjured
+                        if (items[i].getQuality() > 0) {//qualtity can't be negative
+                            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {//vest, elixir, conjured
                                 items[i].setQuality(items[i].getQuality() - 1);
+                                if(items[i].getName() == "Conjured Mana Cake"){
+                                    items[i].setQuality(items[i].getQuality() - 1);//Conjured decrease twice as fast as normal items
+                                }
                             }
                         }
-                    } else {
-                        items[i].setQuality(items[i].getQuality() - items[i].getQuality());
+                    } else {//Backstage
+                        items[i].setQuality(items[i].getQuality() - items[i].getQuality());//Quality drops to 0
                     }
-                } else {
+                } else {//Brie
                     if (items[i].getQuality() < 50) {
-                        items[i].setQuality(items[i].getQuality() + 1);
+                        items[i].setQuality(items[i].getQuality() + 1);//Quality increases
                     }
                 }
             }
