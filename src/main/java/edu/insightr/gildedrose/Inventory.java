@@ -33,58 +33,64 @@ public class Inventory {
 
     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
-            if (items[i].getName() != "Aged Brie"
-                    && items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") { //Vest, Elixir, Suluras, Conjured
-                if (items[i].getQuality() > 0) { //(can't be negative)
-                    if (items[i].getName() != "Sulfuras, Hand of Ragnaros") { //Sulfuras
-                        items[i].setQuality(items[i].getQuality() - 1);//Quality shouldn't change (sulfuras.quality = 80)
-                    }
-                    if(items[i].getName() == "Conjured Mana Cake"){
-                        items[i].setQuality(items[i].getQuality() - 1);}
-                }
-            } else { //Aged Brie & Backstage (ELSE of if not Aged Brie and Backstage
-                if (items[i].getQuality() < 50) { //has to be <50 anyway
-                    items[i].setQuality(items[i].getQuality() + 1); //Quality increase when it gets old (brie & back)
+            if (items[i].getQuality() < 50) {
 
-                    if (items[i].getName() == "Backstage passes to a TAFKAL80ETC concert") {
-                        if (items[i].getSellIn() < 11) {//backstage Quality increases by 2 when there are 10 days or less
-                                items[i].setQuality(items[i].getQuality() + 1);
-                            }
-                        if (items[i].getSellIn() < 6) {//backstage Quality increases by 3 when there are 5 days or less
-                                items[i].setQuality(items[i].getQuality() + 1);
+                switch (items[i].getName()) {
+                    case "+5 Dexterity Vest":
+                        items[i].setSellIn(items[i].getSellIn() - 1);
+                        if (items[i].getSellIn() > 0) {items[i].setQuality(items[i].getQuality() - 1);}
+                        if(items[i].getSellIn() < 0) {items[i].setQuality(items[i].getQuality() - 2);}
+                        if (items[i].getSellIn() < 0){items[i].setQuality(items[i].getQuality() - items[i].getQuality());}
+                        break;
+
+                    case "Aged Brie":
+                        items[i].setSellIn(items[i].getSellIn() - 1);
+                        if (items[i].getSellIn() > 0) {
+                            items[i].setQuality(items[i].getQuality() + 1);
                         }
-                    }
-                }
-            }
+                        break;
 
-            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {//vest, brie, elixir, backstage, conjured
-                items[i].setSellIn(items[i].getSellIn() - 1); //end of each day system lowers Sellin vallue
-            }
+                    case "Elixir of the Mongoose":
+                        items[i].setSellIn(items[i].getSellIn() - 1);
+                        if (items[i].getSellIn() > 0) {
+                            items[i].setQuality(items[i].getQuality() - 1); }
+                        if(items[i].getSellIn() < 0){items[i].setQuality(items[i].getQuality() - 2);}
+                        if (items[i].getQuality() < 0){items[i].setQuality(items[i].getQuality() - items[i].getQuality());}
+                        break;
 
-            if (items[i].getSellIn() < 0) {
-                if (items[i].getName() != "Aged Brie") {//vest, elixir, sulfuras, backstage, conjured
-                    if (items[i].getName() != "Backstage passes to a TAFKAL80ETC concert") {//vest, elixir, sulfuras, conjured
-                        if (items[i].getQuality() > 0) {//qualtity can't be negative
-                            if (items[i].getName() != "Sulfuras, Hand of Ragnaros") {//vest, elixir, conjured
-                                items[i].setQuality(items[i].getQuality() - 1);
-                                if(items[i].getName() == "Conjured Mana Cake"){
-                                    items[i].setQuality(items[i].getQuality() - 1);//Conjured decrease twice as fast as normal items
-                                }
-                            }
+                    case "Sulfuras, Hand of Ragnaros":
+                        break;
+
+                    case "Backstage passes to a TAFKAL80ETC concert":
+                        items[i].setSellIn(items[i].getSellIn() - 1);
+                        if (items[i].getSellIn() > 10) {
+                            items[i].setQuality(items[i].getQuality() + 1);
                         }
-                    } else {//Backstage
-                        items[i].setQuality(items[i].getQuality() - items[i].getQuality());//Quality drops to 0
-                    }
-                } else {//Brie
-                    if (items[i].getQuality() < 50) {
-                        items[i].setQuality(items[i].getQuality() + 1);//Quality increases
-                    }
+                        if (items[i].getSellIn() < 11) {
+                            items[i].setQuality(items[i].getQuality() + 2);
+                        }//backstage Quality increases by 2 when there are 10 days or less
+                        if (items[i].getSellIn() < 6) {
+                            items[i].setQuality(items[i].getQuality() + 1);
+                        }//backstage Quality increases by 3 when there are 5 days or less
+                        if (items[i].getSellIn() < 1){items[i].setQuality(items[i].getQuality() - items[i].getQuality());}
+                        break;
+
+                    case "Conjured Mana Cake":
+                        items[i].setSellIn(items[i].getSellIn() - 1);
+                        if (items[i].getSellIn() > 0) {
+                            items[i].setQuality(items[i].getQuality() - 2); }
+                        if(items[i].getSellIn() < 0){  items[i].setQuality(items[i].getQuality() - 4);}
+                        if (items[i].getQuality() < 0){items[i].setQuality(items[i].getQuality() - items[i].getQuality());}
+                        break;
+
+                     default: break;
+
                 }
             }
+
         }
     }
-
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         Inventory inventory = new Inventory();
         for (int i = 0; i < 10; i++) {
             inventory.updateQuality();
