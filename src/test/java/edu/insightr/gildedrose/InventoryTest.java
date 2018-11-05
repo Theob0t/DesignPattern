@@ -17,7 +17,7 @@ class InventoryTest {
         //assertEquals(expectedValue, realValue);
 
         //SETUP
-        Item vest = new Item("+5 Dexterity Vest", 9, 19);
+        Item vest = new Item("+5 Dexterity Vest", 9, 19); 
         Item agedBrie = new Item("Aged Brie", 2, 0);
         Item elixir = new Item("Elixir of the Mongoose", 5, 7);
         Item sulfuras = new Item("Sulfuras, Hand of Ragnaros", 0, 80);
