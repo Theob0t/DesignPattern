@@ -6,7 +6,7 @@ public class Inventory {
 
     public Inventory(Item[] items) {
         super();
-        this.items = items;
+        this.items = items; 
     }
 
     public Inventory() {
